@@ -15,6 +15,7 @@ BuildRequires:	pam-devel
 BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 1.736
 BuildRequires:	sqlite3-devel
+Requires:	systemd-units >= 38
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_sbindir	/sbin
@@ -91,7 +92,10 @@ install -d $RPM_BUILD_ROOT/var/lib/lastlog
 %clean
 rm -rf $RPM_BUILD_ROOT
 
-%post	-p /sbin/ldconfig
+%post
+/sbin/ldconfig
+%systemd_post lastlog2-import.service
+
 %postun	-p /sbin/ldconfig
 
 %files

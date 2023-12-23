@@ -1,0 +1,31 @@
+--- lastlog2-1.2.0/meson.build~	2023-09-08 10:46:34.000000000 +0200
++++ lastlog2-1.2.0/meson.build	2023-12-23 11:27:26.872550177 +0100
+@@ -143,12 +143,13 @@
+            lastlog2_c, 
+            include_directories : inc,
+            link_with : liblastlog2,
+-           install : true)
++           install : true,
++           install_dir: '/sbin')
+ 
+ if get_option('compat-symlink')
+   install_symlink('lastlog',
+                   pointing_to: 'lastlog2',
+-                  install_dir: 'bin')
++                  install_dir: '/sbin')
+ endif
+ 
+ subdir('tmpfiles.d')
+--- lastlog2-1.2.0/units/lastlog2-import.service~	2023-09-08 10:46:34.000000000 +0200
++++ lastlog2-1.2.0/units/lastlog2-import.service	2023-12-23 11:35:31.759086367 +0100
+@@ -7,8 +7,8 @@
+ 
+ [Service]
+ Type=oneshot
+-ExecStart=/usr/bin/lastlog2 --import /var/log/lastlog
+-ExecStartPost=/usr/bin/mv /var/log/lastlog /var/log/lastlog.migrated
++ExecStart=/sbin/lastlog2 --import /var/log/lastlog
++ExecStartPost=/bin/mv /var/log/lastlog /var/log/lastlog.migrated
+ RemainAfterExit=true
+ 
+ [Install]

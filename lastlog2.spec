@@ -96,6 +96,9 @@ rm -rf $RPM_BUILD_ROOT
 /sbin/ldconfig
 %systemd_post lastlog2-import.service
 
+%preun
+%systemd_preun lastlog2-import.service
+
 %postun	-p /sbin/ldconfig
 
 %files

@@ -101,7 +101,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/liblastlog2.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/liblastlog2.so.1
 %{_mandir}/man8/lastlog2.8*
-%{_prefix}%{systemdunitdir}/lastlog2-import.service
+%{systemdunitdir}/lastlog2-import.service
 %{systemdtmpfilesdir}/lastlog2.conf
 %dir /var/lib/lastlog
 %ghost /var/lib/lastlog/lastlog2.db

@@ -1,24 +1,24 @@
 Summary:	Y2038 safe version of lastlog
 Summary(pl.UTF-8):	Wersja usługi lastlog bezpieczna pod kątem Y2038
 Name:		lastlog2
-Version:	1.2.0
+Version:	1.3.1
 Release:	1
 License:	BSD
 Group:		Libraries
-#Source0Download: https://github.com/thkukuk/lastlog2/releases
-Source0:	https://github.com/thkukuk/lastlog2/releases/download/v%{version}/%{name}-%{version}.tar.xz
-# Source0-md5:	66bbadb41de2cefb54a12d689d6f3cb0
+#Source0Download: https://github.com/thkukuk/lastlog2/tags
+Source0:	https://github.com/thkukuk/lastlog2/archive/v%{version}/%{name}-%{version}.tar.gz
+# Source0-md5:	2b3534210f9f51406e3c67cdf0f2a309
 Patch0:		split-usr.patch
 URL:		https://github.com/thkukuk/lastlog2
 # _TIME_BITS=64
 BuildRequires:	glibc-devel >= 6:2.34
 BuildRequires:	libxslt-progs
-BuildRequires:	meson >= 0.53.0
+BuildRequires:	meson >= 0.61.0
 BuildRequires:	ninja >= 1.5
 BuildRequires:	pam-devel
 BuildRequires:	pkgconfig
 BuildRequires:	rpmbuild(macros) >= 1.736
-BuildRequires:	sqlite3-devel
+BuildRequires:	sqlite3-devel >= 3
 Requires:	systemd-units >= 38
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 

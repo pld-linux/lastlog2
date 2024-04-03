@@ -1,15 +1,19 @@
 Summary:	Y2038 safe version of lastlog
+Summary(pl.UTF-8):	Wersja usługi lastlog bezpieczna pod kątem Y2038
 Name:		lastlog2
 Version:	1.2.0
 Release:	1
 License:	BSD
 Group:		Libraries
+#Source0Download: https://github.com/thkukuk/lastlog2/releases
 Source0:	https://github.com/thkukuk/lastlog2/releases/download/v%{version}/%{name}-%{version}.tar.xz
 # Source0-md5:	66bbadb41de2cefb54a12d689d6f3cb0
 Patch0:		split-usr.patch
 URL:		https://github.com/thkukuk/lastlog2
+# _TIME_BITS=64
+BuildRequires:	glibc-devel >= 6:2.34
 BuildRequires:	libxslt-progs
-BuildRequires:	meson >= 0.50.0
+BuildRequires:	meson >= 0.53.0
 BuildRequires:	ninja >= 1.5
 BuildRequires:	pam-devel
 BuildRequires:	pkgconfig
@@ -36,7 +40,6 @@ Since there are only few applications which really support lastlog,
 the data is also not always correct.
 
 lastlog2 tries to solve this problems:
-
 - It's using sqlite3 as database backend.
 - Data is only collected via a PAM module, so that every tools can
   make use of it, without modifying existing packages.
@@ -46,17 +49,42 @@ lastlog2 tries to solve this problems:
 - The size of the database depends on the amount of users, not how big
   the biggest UID is.
 
-IMPORTANT To be Y2038 safe on 32bit architectures, the binaries needs
-to be build with a 64bit time_t. This should be the standard on 64bit
-architectures.
+%description -l pl.UTF-8
+Standardowa implementacja /var/log/lastlog z użyciem lastlog.h z glibc
+wykorzystuje 32-bitowy time_t w strukturze lastlog na systemach
+wieloarchitekturowych, takich jak x86-64 (który może wykonywać binaria
+64- i 32-bitowe). Przez to nawet na czysto 64-bitowym systemie, na
+wielu architekturach wykorzystujących glibc można napotkać problem
+roku 2038.
+
+Ponadto /var/log/lastlog może stać się bardzo duży, jeśli w systemie
+używane są duże UID-y. Ponieważ jest to plik rzadki, zwykle nie jest
+to problem, ale może być w zależności od używanego systemu plików i
+narzędzi do wykonywania kopii zapasowych.
+
+Ponieważ tylko kilka aplikacji tak naprawdę obsługuje lastlog, dane
+nie muszą być zawsze poprawne.
+
+lastlog2 próbuje rozwiązać te problemy:
+- wykorzystuje sqlite3 jako backend bazy danych
+- dane są zbierane tylko przez moduł PAM, więc wszystkie narzędzia
+  mogą go używać bez dodatkowych modyfikacji
+- wyjście jest zgodne ze starą implementacją lastlog na ile to możliwe
+- stary plik /var/log/lastlog można zaimportować do nowej bazy danych
+- rozmiar bazy danych zależy od liczby użytkowników, a nie najwyższej
+  wartości UID-a
 
 %package -n pam-pam_lastlog2
 Summary:	PAM module to display date of last login
+Summary(pl.UTF-8):	Moduł PAM do wyświetlania daty ostatniego logowania
 Group:		Base
 Requires:	%{name} = %{version}-%{release}
 
 %description -n pam-pam_lastlog2
 PAM module to display date of last login.
+
+%description -n pam-pam_lastlog2 -l pl.UTF-8
+Moduł PAM do wyświetlania daty ostatniego logowania.
 
 %package devel
 Summary:	Header files for lastlog2 library
@@ -103,7 +131,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%doc NEWS README.md
+%doc LICENSE NEWS README.md
 %attr(755,root,root) %{_sbindir}/lastlog2
 %attr(755,root,root) %{_libdir}/liblastlog2.so.*.*.*
 %attr(755,root,root) %ghost %{_libdir}/liblastlog2.so.1

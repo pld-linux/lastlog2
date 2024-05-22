@@ -1,8 +1,9 @@
+# NOTE: lastlog2 (version 2.x) is packaged in util-linux.spec
 Summary:	Y2038 safe version of lastlog
 Summary(pl.UTF-8):	Wersja usługi lastlog bezpieczna pod kątem Y2038
 Name:		lastlog2
 Version:	1.3.1
-Release:	1
+Release:	1.1
 License:	BSD
 Group:		Libraries
 #Source0Download: https://github.com/thkukuk/lastlog2/tags

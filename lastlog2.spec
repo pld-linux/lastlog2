@@ -104,17 +104,17 @@ Pliki nagłówkowe biblioteki lastlog2.
 %patch -P0 -p1
 
 %build
-%meson build \
+%meson \
 	--sbindir=%{_sbindir} \
 	-Dsplit-usr=true
 
-%ninja_build -C build
+%meson_build
 
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT/var/lib/lastlog
 
-%ninja_install -C build
+%meson_install
 
 :> $RPM_BUILD_ROOT/var/lib/lastlog/lastlog2.db
 
